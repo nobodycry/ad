@@ -1,0 +1,1 @@
+for /r . %i in (.svn) do rd /s /q %i
