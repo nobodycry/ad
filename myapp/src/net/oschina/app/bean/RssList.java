@@ -49,6 +49,7 @@ public class RssList extends Entity {
 				software.name = temp.get("title");
 				software.description = temp.get("description");
 				software.url = temp.get("link");
+				software.date = temp.get("date");		
 
 				result.getSoftwarelist().add(software);
 			}		

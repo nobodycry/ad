@@ -284,6 +284,7 @@ public class RssLib extends BaseActivity{
         		intent.putExtra("ident", sw.name);
         		intent.putExtra("content", sw.description);
         		intent.putExtra("url", sw.url);
+        		intent.putExtra("date", sw.date);
         		RssLib.this.startActivity(intent);
         	}
 		});

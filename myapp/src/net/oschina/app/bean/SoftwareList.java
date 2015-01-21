@@ -35,6 +35,7 @@ public class SoftwareList extends Entity{
 		public String name;
 		public String description;
 		public String url;
+		public String date;		
 	}
 
 	public int getSoftwarecount() {

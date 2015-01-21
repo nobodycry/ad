@@ -67,6 +67,7 @@ public class RssDetail extends BaseActivity {
 	private String ident;
 	private String content;
 	private String url;
+	private String date;
 
 	private final static int DATA_LOAD_ING = 0x001;
 	private final static int DATA_LOAD_COMPLETE = 0x002;
@@ -129,6 +130,7 @@ public class RssDetail extends BaseActivity {
 		ident = getIntent().getStringExtra("ident");
 		content = getIntent().getStringExtra("content");
 		url = getIntent().getStringExtra("url");
+		date = getIntent().getStringExtra("date");
 		//UIHelper.ToastMessage(this, content);
 
 		mHandler = new Handler() {
@@ -250,7 +252,8 @@ public class RssDetail extends BaseActivity {
 					softwareDetail.setExtensionTitle("");					
 					softwareDetail.setLanguage("cn");
 					softwareDetail.setLicense("GPL");
-					softwareDetail.setOs("Cent");					
+					softwareDetail.setOs("Cent");
+					softwareDetail.setRecordtime(date);
 					
 //					if (softwareDetail != null
 //							&& !StringUtils.isEmpty(softwareDetail.getLogo())) {
