@@ -146,14 +146,14 @@ public class RssLib extends BaseActivity{
         		
         		if(type == null) return;
         		
-        		if(type.tag > 0){
+        		//if(type.tag > 0){
         			curTitleLV1 = type.name;
         			mTitle.setText(curTitleLV1);
         			//加载二级分类
         			curScreen = SCREEN_TAG;
         			mScrollLayout.scrollToScreen(curScreen);
-        			loadLvSoftwareCatalogData(type.tag, mSoftwareTagHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);
-        		}
+        			loadLvSoftwareCatalogData(type.url, mSoftwareTagHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);
+        		//}
         	}
 		});
     	
@@ -410,7 +410,7 @@ public class RssLib extends BaseActivity{
     //初始化控件数据
   	private void initData()
   	{
-  		this.loadLvSoftwareCatalogData(0, mSoftwareCatalogHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);
+  		this.loadLvSoftwareCatalogData(this.URL_ROOT+"cat0.xml", mSoftwareCatalogHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);
   	}
   	
   	/**
@@ -458,7 +458,7 @@ public class RssLib extends BaseActivity{
 		    	{			    		
 		    		curScreen = SCREEN_CATALOG;
 		    		if(lvSoftwareCatalogData.size() == 0)
-		    			loadLvSoftwareCatalogData(0, mSoftwareCatalogHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);		
+		    			loadLvSoftwareCatalogData(RssLib.this.URL_ROOT+"cat0.xml", mSoftwareCatalogHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);		
 		    	}
 		    	else
 		    	{		    		
@@ -478,7 +478,7 @@ public class RssLib extends BaseActivity{
      * @param handler 处理器
      * @param action 动作标识
      */
-	private void loadLvSoftwareCatalogData(final int tag,final Handler handler,final int action){  
+	private void loadLvSoftwareCatalogData(final String url,final Handler handler,final int action){  
 		headButtonSwitch(DATA_LOAD_ING);
 		new Thread(){
 			public void run() {
@@ -494,7 +494,7 @@ public class RssLib extends BaseActivity{
 //					SoftwareType a = new SoftwareType();
 //					a.name="a";a.tag=1;
 //					softwareCatalogList.getSoftwareTypelist().add(a);
-					RssList.getCatList((AppContext)getApplication(), RssLib.URL_ROOT+"cat"+tag+".xml", isRefresh);
+					RssList.getCatList((AppContext)getApplication(), url, isRefresh);
 					//UIHelper.ToastMessage(RssLib.this, ApiClient.lastPageSrc);
 					msg.what = softwareCatalogList.getSoftwareTypelist().size();
 					msg.obj = softwareCatalogList;
