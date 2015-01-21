@@ -29,6 +29,7 @@ public class SoftwareCatalogList extends Entity{
 		public String name;
 		public int tag;
 		public String url;
+		public String encode;
 	}
 
 	public int getSoftwarecount() {

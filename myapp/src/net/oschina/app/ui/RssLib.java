@@ -214,7 +214,7 @@ public class RssLib extends BaseActivity{
         			mScrollLayout.scrollToScreen(curScreen);
         			curSearchTag = type.url;
         			UIHelper.ToastMessage(RssLib.this, curSearchTag);
-        			loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);
+        			loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG,type.encode);
         		}
         	}
 		});
@@ -314,7 +314,7 @@ public class RssLib extends BaseActivity{
 					//当前pageIndex
 					int pageIndex = lvSumData/20;
 					if(curHeadTag == HEAD_TAG_CATALOG)
-						loadLvSoftwareTagData(curSearchTag, pageIndex, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_SCROLL);
+						loadLvSoftwareTagData(curSearchTag, pageIndex, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_SCROLL,null);
 					else
 						loadLvSoftwareData(curHeadTag, pageIndex, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_SCROLL);
 				}
@@ -326,7 +326,7 @@ public class RssLib extends BaseActivity{
     	mlvSoftware.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			public void onRefresh() {
 				if(curHeadTag == HEAD_TAG_CATALOG)
-					loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_REFRESH);
+					loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_REFRESH,null);
 				else
 					loadLvSoftwareData(curHeadTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_REFRESH);
             }
@@ -515,7 +515,7 @@ public class RssLib extends BaseActivity{
      * @param handler 处理器
      * @param action 动作标识
      */
-	private void loadLvSoftwareTagData(final String searchTag,final int pageIndex,final Handler handler,final int action){  
+	private void loadLvSoftwareTagData(final String searchTag,final int pageIndex,final Handler handler,final int action,final String encode){  
 		headButtonSwitch(DATA_LOAD_ING);
 		new Thread(){
 			public void run() {
@@ -525,7 +525,7 @@ public class RssLib extends BaseActivity{
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareTagList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),searchTag,isRefresh,null);					
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),searchTag,isRefresh,encode);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
 					 
@@ -599,7 +599,7 @@ public class RssLib extends BaseActivity{
 	} 
 	
 	
-private void loadLvSoftwareData(final String url,final int pageIndex,final Handler handler,final int action){  
+private void loadLvSoftwareData(final String url,final int pageIndex,final Handler handler,final int action,final String encode){  
 		headButtonSwitch(DATA_LOAD_ING);
 		
 		new Thread(){
@@ -610,7 +610,7 @@ private void loadLvSoftwareData(final String url,final int pageIndex,final Handl
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh,null);					
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh,encode);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
 	            } catch (Exception e) {

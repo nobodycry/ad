@@ -86,6 +86,7 @@ public class RssList extends Entity {
 				software.name = temp.get("title");
 				software.tag = Integer.parseInt(temp.get("description"));
 				software.url = temp.get("link");
+				software.encode = temp.get("description");
 				result.getSoftwareTypelist().add(software);
 			}		
 		} catch (Exception e) {
@@ -107,7 +108,7 @@ public class RssList extends Entity {
 		// 获得XmlPullParser解析器
 		XmlPullParser xmlParser = Xml.newPullParser();
 		try {
-			xmlParser.setInput(inputStream, encode==null ? "UTF-8" : encode);
+			xmlParser.setInput(inputStream, encode==null || encode.equalsIgnoreCase("") ? "UTF-8" : encode);
 			// 获得解析到的事件类别，这里有开始文档，结束文档，开始标签，结束标签，文本等等事件。
 			int eventType = xmlParser.getEventType();
 			// 一直循环，直到文档结束
