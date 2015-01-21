@@ -105,7 +105,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ZoomLight" />
         <activity
+            android:name=".ui.RssLib"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ZoomLight" />
+        <activity
             android:name=".ui.SoftwareDetail"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.SlideTop" />
+        <activity
+            android:name=".ui.RssDetail"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.SlideTop" />
         <activity
