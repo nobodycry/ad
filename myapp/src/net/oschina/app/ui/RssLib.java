@@ -74,7 +74,7 @@ public class RssLib extends BaseActivity{
     
 	private int curHeadTag = HEAD_TAG_CATALOG;//默认初始头部标签
 	private int curScreen = SCREEN_CATALOG;//默认当前屏幕
-	private int curSearchTag;//当前二级分类的Tag
+	private String curSearchTag;//当前二级分类的Tag
 	private int curLvSoftwareDataState;
 	private String curTitleLV1;//当前一级分类标题
     
@@ -211,7 +211,7 @@ public class RssLib extends BaseActivity{
         			//加载软件列表
         			curScreen = SCREEN_SOFTWARE;
         			mScrollLayout.scrollToScreen(curScreen);
-        			curSearchTag = type.tag;
+        			curSearchTag = type.url;
         			loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);
         		}
         	}
@@ -513,7 +513,7 @@ public class RssLib extends BaseActivity{
      * @param handler 处理器
      * @param action 动作标识
      */
-	private void loadLvSoftwareTagData(final int searchTag,final int pageIndex,final Handler handler,final int action){  
+	private void loadLvSoftwareTagData(final String searchTag,final int pageIndex,final Handler handler,final int action){  
 		headButtonSwitch(DATA_LOAD_ING);
 		new Thread(){
 			public void run() {
@@ -523,7 +523,7 @@ public class RssLib extends BaseActivity{
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareTagList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),searchTag-1,isRefresh);					
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),searchTag,isRefresh);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
 					 
