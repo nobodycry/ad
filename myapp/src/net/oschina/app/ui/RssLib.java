@@ -173,6 +173,7 @@ public class RssLib extends BaseActivity{
 					case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 						lvSoftwareCatalogData.clear();//先清除原有数据
 						lvSoftwareCatalogData.addAll(list.getSoftwareTypelist());
+						lvSoftwareCatalogAdapter.notifyDataSetChanged();
 						break;
 					case UIHelper.LISTVIEW_ACTION_SCROLL:
 						break;
@@ -482,7 +483,7 @@ public class RssLib extends BaseActivity{
 		new Thread(){
 			public void run() {
 				Message msg = new Message();
-				boolean isRefresh = false;
+				boolean isRefresh = true;//default true
 				if(action == UIHelper.LISTVIEW_ACTION_REFRESH || action == UIHelper.LISTVIEW_ACTION_SCROLL)
 					isRefresh = true;
 				try {
