@@ -481,22 +481,18 @@ public class RssLib extends BaseActivity{
 		new Thread(){
 			public void run() {
 				Message msg = new Message();
+				boolean isRefresh = false;
+				if(action == UIHelper.LISTVIEW_ACTION_REFRESH || action == UIHelper.LISTVIEW_ACTION_SCROLL)
+					isRefresh = true;
 				try {
 					//SoftwareCatalogList softwareCatalogList = ((AppContext)getApplication()).getSoftwareCatalogList(tag);
+					UIHelper.ToastMessage(RssLib.this, RssLib.URL_ROOT+"cat"+tag+".xml");
 					SoftwareCatalogList softwareCatalogList = new SoftwareCatalogList();
-					if(tag ==0){					
-						SoftwareType nh = new SoftwareType();
-						nh.name = "NH";
-						nh.tag = 1;
-						softwareCatalogList.getSoftwareTypelist().add(nh);
-					}else{
-						for(int i=1;i<=8;i++){
-							SoftwareType nh = new SoftwareType();
-							nh.name = "cat"+i;
-							nh.tag = i;
-							softwareCatalogList.getSoftwareTypelist().add(nh);
-						}
-					}
+					SoftwareType a = new SoftwareType();
+					a.name="a";a.tag=1;
+					softwareCatalogList.getSoftwareTypelist().add(a);
+//					RssList.getCatList((AppContext)getApplication(), RssLib.URL_ROOT+"cat"+tag+".xml", isRefresh);
+					UIHelper.ToastMessage(RssLib.this, ApiClient.lastPageSrc);
 					msg.what = softwareCatalogList.getSoftwareTypelist().size();
 					msg.obj = softwareCatalogList;
 	            } catch (Exception e) {

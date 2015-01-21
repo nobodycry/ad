@@ -246,16 +246,19 @@ public class ApiClient {
 	 * @param files
 	 * @throws AppException
 	 */
-	private static InputStream _post(AppContext appContext, String url, Map<String, Object> params, Map<String,File> files) throws AppException {
+	public static InputStream _post(AppContext appContext, String url, Map<String, Object> params, Map<String,File> files) throws AppException {
 		System.out.println("post_url==> "+url);
-		System.out.println("params:");		
-		Iterator it = params.entrySet().iterator();
-	    while (it.hasNext()) {
-		    Map.Entry entry = (Map.Entry) it.next();
-		    Object key = entry.getKey();
-		    Object value = entry.getValue();
-		    System.out.println(key + " = " + value);
-	    }		
+		System.out.println("params:");
+		
+		if(params != null){
+			Iterator it = params.entrySet().iterator();
+		    while (it.hasNext()) {
+			    Map.Entry entry = (Map.Entry) it.next();
+			    Object key = entry.getKey();
+			    Object value = entry.getValue();
+			    System.out.println(key + " = " + value);
+		    }
+		}
 		
 		String cookie = getCookie(appContext);
 		String userAgent = getUserAgent(appContext);

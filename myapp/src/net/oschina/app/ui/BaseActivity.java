@@ -24,7 +24,7 @@ public class BaseActivity extends Activity {
 
 	// 是否允许全屏
 	private boolean allowFullScreen = true;
-
+	public static final String URL_ROOT = "https://raw.githubusercontent.com/nobodycry/ad/master/myapp/web/";
 	// 是否允许销毁
 	private boolean allowDestroy = true;
 

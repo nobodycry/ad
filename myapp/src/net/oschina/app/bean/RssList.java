@@ -12,6 +12,7 @@ import net.oschina.app.AppContext;
 import net.oschina.app.AppException;
 import net.oschina.app.api.ApiClient;
 import net.oschina.app.bean.SoftwareList.Software;
+import net.oschina.app.bean.SoftwareCatalogList.SoftwareType;
 import net.oschina.app.common.HPTools;
 import net.oschina.app.common.StringUtils;
 
@@ -31,16 +32,20 @@ public class RssList extends Entity {
 	
 	public List<Map> rssList = null;
 	
+	
 	public static SoftwareList getList(AppContext appContext, int tag, boolean isRefresh) {
+		if(tag<0 || tag>7){
+			tag = 0;
+		}
+		return getList(appContext, "http://www3.nhk.or.jp/rss/news/cat"+tag+".xml", isRefresh);		
+	}
+	
+	public static SoftwareList getList(AppContext appContext, String url, boolean isRefresh) {
 		SoftwareList result = new SoftwareList();
 		RssList nh = null;
 		try {
-			if(tag<0 || tag>7){
-				tag = 0;
-			}
-			nh = appContext.getRssList("http://www3.nhk.or.jp/rss/news/cat"+tag+".xml", isRefresh);
-			//RssList.parse(ApiClient.http_get(appContext,
-			//		"http://www3.nhk.or.jp/rss/news/cat"+tag+".xml"));
+			
+			nh = appContext.getRssList(url, isRefresh);			
 			Iterator it = nh.rssList.iterator();
 			while (it.hasNext()) {
 				HashMap<String, String> temp = (HashMap<String, String>) it
@@ -59,6 +64,34 @@ public class RssList extends Entity {
 		}
 		result.setSoftwarecount(nh.rssList.size());
 		result.setPageSize(nh.rssList.size());
+		result.setNotice(new Notice());
+		result.getNotice().setAtmeCount(0);
+		result.getNotice().setMsgCount(0);
+		result.getNotice().setReviewCount(0);
+		result.getNotice().setNewFansCount(0);
+		return result;
+	}
+	
+	public static SoftwareCatalogList getCatList(AppContext appContext, String url, boolean isRefresh) {
+		SoftwareCatalogList result = new SoftwareCatalogList();
+		RssList nh = null;
+		try {
+			
+			nh = appContext.getRssList(url, isRefresh);			
+			Iterator it = nh.rssList.iterator();
+			while (it.hasNext()) {
+				HashMap<String, String> temp = (HashMap<String, String>) it
+						.next();
+				SoftwareType software = new SoftwareType();
+				software.name = temp.get("title");
+				software.tag = Integer.parseInt(temp.get("description"));
+				result.getSoftwareTypelist().add(software);
+			}		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		result.setSoftwarecount(nh.rssList.size());		
 		result.setNotice(new Notice());
 		result.getNotice().setAtmeCount(0);
 		result.getNotice().setMsgCount(0);

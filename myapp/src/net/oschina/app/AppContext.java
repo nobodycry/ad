@@ -679,7 +679,7 @@ public class AppContext extends Application {
 		String key = HPTools.MD5(url);
 		if(isNetworkConnected() && (isCacheDataFailure(key) || isRefresh)) {
 			try{		
-				rssList.rssList = RssList.parse(ApiClient.http_get(this,url));
+				rssList.rssList = RssList.parse(ApiClient._post(this,url,null,null));
 				rssList.setCacheKey(key);
 				saveObject(rssList, key);					
 			}catch(Exception e){
