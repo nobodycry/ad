@@ -188,7 +188,7 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					((AppException)msg.obj).makeToast(RssLib.this);
+					UIHelper.ToastMessage(RssLib.this,"error");
 				}
 			}
 		};
