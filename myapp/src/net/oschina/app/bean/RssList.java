@@ -84,7 +84,7 @@ public class RssList extends Entity {
 						.next();
 				SoftwareType software = new SoftwareType();
 				software.name = temp.get("title");
-				software.tag = Integer.parseInt(temp.get("description"));
+				software.tag = 1;
 				software.url = temp.get("link");
 				software.encode = temp.get("description");
 				result.getSoftwareTypelist().add(software);
