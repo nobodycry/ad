@@ -213,7 +213,7 @@ public class RssLib extends BaseActivity{
         			curScreen = SCREEN_SOFTWARE;
         			mScrollLayout.scrollToScreen(curScreen);
         			curSearchTag = type.url;
-        			UIHelper.ToastMessage(RssLib.this, curSearchTag);
+        			UIHelper.ToastMessage(RssLib.this, curSearchTag+type.encode);
         			loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG,type.encode);
         		}
         	}
