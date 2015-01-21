@@ -525,7 +525,7 @@ public class RssLib extends BaseActivity{
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareTagList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),searchTag,isRefresh);					
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),searchTag,isRefresh,null);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
 					 
@@ -610,7 +610,7 @@ private void loadLvSoftwareData(final String url,final int pageIndex,final Handl
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh);					
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh,null);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
 	            } catch (Exception e) {

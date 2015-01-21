@@ -37,15 +37,15 @@ public class RssList extends Entity {
 		if(tag<0 || tag>7){
 			tag = 0;
 		}
-		return getList(appContext, "http://www3.nhk.or.jp/rss/news/cat"+tag+".xml", isRefresh);		
+		return getList(appContext, "http://www3.nhk.or.jp/rss/news/cat"+tag+".xml", isRefresh,null);		
 	}
 	
-	public static SoftwareList getList(AppContext appContext, String url, boolean isRefresh) {
+	public static SoftwareList getList(AppContext appContext, String url, boolean isRefresh,String encode) {
 		SoftwareList result = new SoftwareList();
 		RssList nh = null;
 		try {
 			
-			nh = appContext.getRssList(url, isRefresh);			
+			nh = appContext.getRssList(url, isRefresh,encode);			
 			Iterator it = nh.rssList.iterator();
 			while (it.hasNext()) {
 				HashMap<String, String> temp = (HashMap<String, String>) it
@@ -77,7 +77,7 @@ public class RssList extends Entity {
 		RssList nh = null;
 		try {
 			
-			nh = appContext.getRssList(url, isRefresh);			
+			nh = appContext.getRssList(url, isRefresh,null);			
 			Iterator it = nh.rssList.iterator();
 			while (it.hasNext()) {
 				HashMap<String, String> temp = (HashMap<String, String>) it
@@ -101,13 +101,13 @@ public class RssList extends Entity {
 		return result;
 	}
 
-	public static List<Map> parse(InputStream inputStream) throws Exception {
+	public static List<Map> parse(InputStream inputStream,String encode) throws Exception {
 		List<Map> list = new ArrayList<Map>();
 		HashMap<String, String> i = null;
 		// 获得XmlPullParser解析器
 		XmlPullParser xmlParser = Xml.newPullParser();
 		try {
-			xmlParser.setInput(inputStream, "UTF-8");
+			xmlParser.setInput(inputStream, encode==null ? "UTF-8" : encode);
 			// 获得解析到的事件类别，这里有开始文档，结束文档，开始标签，结束标签，文本等等事件。
 			int eventType = xmlParser.getEventType();
 			// 一直循环，直到文档结束

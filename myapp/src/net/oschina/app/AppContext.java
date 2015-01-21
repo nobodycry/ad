@@ -674,12 +674,12 @@ public class AppContext extends Application {
 		return list;
 	}
 	
-	public RssList getRssList(String url, boolean isRefresh) {
+	public RssList getRssList(String url, boolean isRefresh,String encode) {
 		RssList rssList = new RssList();
 		String key = HPTools.MD5(url);
 		if(isNetworkConnected() && (isCacheDataFailure(key) || isRefresh)) {
 			try{		
-				rssList.rssList = RssList.parse(ApiClient._post(this,url,null,null));
+				rssList.rssList = RssList.parse(ApiClient._post(this,url,null,null),encode);
 				rssList.setCacheKey(key);
 				saveObject(rssList, key);					
 			}catch(Exception e){
