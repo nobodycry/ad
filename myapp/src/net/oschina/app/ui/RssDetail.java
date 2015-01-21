@@ -148,7 +148,7 @@ public class RssDetail extends BaseActivity {
 							+ softwareDetail.getTitle();
 					mTitle.setText(title);
 
-					String body = UIHelper.WEB_STYLE + softwareDetail.getBody();
+					String body = /*UIHelper.WEB_STYLE + */softwareDetail.getBody();
 					// 读取用户设置：是否加载文章图片--默认有wifi下始终加载图片
 					boolean isLoadImage;
 					AppContext ac = (AppContext) getApplication();
