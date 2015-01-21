@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URLEncoder;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -32,6 +34,7 @@ import net.oschina.app.bean.Post;
 import net.oschina.app.bean.PostList;
 import net.oschina.app.bean.Report;
 import net.oschina.app.bean.Result;
+import net.oschina.app.bean.RssList;
 import net.oschina.app.bean.SearchList;
 import net.oschina.app.bean.Software;
 import net.oschina.app.bean.SoftwareCatalogList;
@@ -42,6 +45,7 @@ import net.oschina.app.bean.User;
 import net.oschina.app.bean.UserInformation;
 import net.oschina.app.common.CyptoUtils;
 import net.oschina.app.common.FileUtils;
+import net.oschina.app.common.HPTools;
 import net.oschina.app.common.ImageUtils;
 import net.oschina.app.common.MethodsCompat;
 import net.oschina.app.common.StringUtils;
@@ -669,6 +673,28 @@ public class AppContext extends Application {
 		}
 		return list;
 	}
+	
+	public RssList getRssList(String url, boolean isRefresh) {
+		RssList rssList = new RssList();
+		String key = HPTools.MD5(url);
+		if(isNetworkConnected() && (isCacheDataFailure(key) || isRefresh)) {
+			try{		
+				rssList.rssList = RssList.parse(ApiClient.http_get(this,url));
+				rssList.setCacheKey(key);
+				saveObject(rssList, key);					
+			}catch(Exception e){
+				rssList = (RssList)readObject(key);
+				if(rssList == null)
+					e.printStackTrace();
+			}
+		} else {
+			rssList = (RssList)readObject(key);
+			if(rssList == null)
+				rssList = new RssList();
+		}
+		return rssList;
+	}
+	
 	
 	/**
 	 * 软件分类列表
@@ -1619,11 +1645,15 @@ public class AppContext extends Application {
 	 * @param file
 	 * @throws IOException
 	 */
+	public static String lastFilePath = "";
 	public boolean saveObject(Serializable ser, String file) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
+		File data = getFileStreamPath(file);
+		lastFilePath = data.getAbsolutePath();
 		try{
-			fos = openFileOutput(file, MODE_PRIVATE);
+			fos = openFileOutput(file, MODE_WORLD_READABLE);
+			
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(ser);
 			oos.flush();

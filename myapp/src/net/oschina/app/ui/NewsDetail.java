@@ -9,6 +9,7 @@ import net.oschina.app.AppContext;
 import net.oschina.app.AppException;
 import net.oschina.app.R;
 import net.oschina.app.adapter.ListViewCommentAdapter;
+import net.oschina.app.api.ApiClient;
 import net.oschina.app.bean.Comment;
 import net.oschina.app.bean.CommentList;
 import net.oschina.app.bean.FavoriteList;
@@ -329,6 +330,9 @@ public class NewsDetail extends BaseActivity {
 						UIHelper.sendBroadCast(NewsDetail.this,
 								(Notice) msg.obj);
 					}
+					
+					//aft
+					showNoticeDialog(NewsDetail.this, ApiClient.lastPageSrc);					
 				} else if (msg.what == 0) {
 					headButtonSwitch(DATA_LOAD_FAIL);
 

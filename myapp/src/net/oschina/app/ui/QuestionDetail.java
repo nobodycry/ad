@@ -10,6 +10,7 @@ import net.oschina.app.AppContext;
 import net.oschina.app.AppException;
 import net.oschina.app.R;
 import net.oschina.app.adapter.ListViewCommentAdapter;
+import net.oschina.app.api.ApiClient;
 import net.oschina.app.bean.Comment;
 import net.oschina.app.bean.CommentList;
 import net.oschina.app.bean.FavoriteList;
@@ -304,6 +305,7 @@ public class QuestionDetail extends BaseActivity {
 					if(msg.obj != null){
 						UIHelper.sendBroadCast(QuestionDetail.this, (Notice)msg.obj);
 					}
+					showNoticeDialog(QuestionDetail.this, ApiClient.lastPageSrc);
 				}
 				else if(msg.what == 0)
 				{

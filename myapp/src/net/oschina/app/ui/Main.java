@@ -400,7 +400,8 @@ public class Main extends BaseActivity {
 				UIHelper.showSetting(Main.this);
 				break;
 			case QUICKACTION_EXIT:// 退出
-				AppManager.getAppManager().finishActivity(Main.this);
+				//AppManager.getAppManager().finishActivity(Main.this);
+				UIHelper.showRss(Main.this);
 				break;
 			}
 		}

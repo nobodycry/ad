@@ -74,10 +74,10 @@ public class NewDataToast extends Toast{
         v.setMinimumWidth(dm.widthPixels);//设置控件最小宽度为手机屏幕宽度
         
         TextView tv = (TextView)v.findViewById(R.id.new_data_toast_message);
-        tv.setText(text);
+        tv.setText(text+context.getClass().getName());
         
         result.setView(v);
-        result.setDuration(600);
+        result.setDuration(1600);
         result.setGravity(Gravity.TOP, 0, (int)(dm.density*75));
 
         return result;

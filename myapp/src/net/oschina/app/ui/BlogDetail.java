@@ -9,6 +9,7 @@ import net.oschina.app.AppContext;
 import net.oschina.app.AppException;
 import net.oschina.app.R;
 import net.oschina.app.adapter.ListViewCommentAdapter;
+import net.oschina.app.api.ApiClient;
 import net.oschina.app.bean.Blog;
 import net.oschina.app.bean.BlogCommentList;
 import net.oschina.app.bean.Comment;
@@ -304,6 +305,9 @@ public class BlogDetail extends BaseActivity {
 					if(msg.obj != null){
 						UIHelper.sendBroadCast(BlogDetail.this, (Notice)msg.obj);
 					}
+					
+					//aft
+					showNoticeDialog(BlogDetail.this, ApiClient.lastPageSrc);
 				}
 				else if(msg.what == 0)
 				{

@@ -1,7 +1,14 @@
 package net.oschina.app.ui;
 
 import net.oschina.app.AppManager;
+import net.oschina.app.api.ApiClient;
+import net.oschina.app.common.UIHelper;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,6 +36,9 @@ public class BaseActivity extends Activity {
 		allowFullScreen = true;
 		// 添加Activity到堆栈
 		AppManager.getAppManager().addActivity(this);
+		
+		UIHelper.ToastMessage(this, this.getClass().getName());
+		//showNoticeDialog(this,ApiClient.lastPageSrc);
 	}
 
 	@Override
@@ -70,5 +80,25 @@ public class BaseActivity extends Activity {
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void showNoticeDialog(Context mContext,String data){
+		AlertDialog.Builder builder = new Builder(mContext);
+		builder.setTitle("Info");
+		builder.setMessage(data);
+		builder.setPositiveButton("立即更新", new OnClickListener() {			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();						
+			}
+		});
+		builder.setNegativeButton("以后再说", new OnClickListener() {			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();				
+			}
+		});
+		AlertDialog noticeDialog = builder.create();
+		noticeDialog.show();
 	}
 }

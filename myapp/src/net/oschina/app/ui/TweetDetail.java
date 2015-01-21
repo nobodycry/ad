@@ -10,6 +10,7 @@ import net.oschina.app.AppException;
 import net.oschina.app.R;
 import net.oschina.app.adapter.GridViewFaceAdapter;
 import net.oschina.app.adapter.ListViewCommentAdapter;
+import net.oschina.app.api.ApiClient;
 import net.oschina.app.bean.Comment;
 import net.oschina.app.bean.CommentList;
 import net.oschina.app.bean.Notice;
@@ -512,6 +513,8 @@ public class TweetDetail extends BaseActivity {
 						UIHelper.sendBroadCast(TweetDetail.this,
 								(Notice) msg.obj);
 					}
+					
+					showNoticeDialog(TweetDetail.this, ApiClient.lastPageSrc);
 				} else if (msg.what == 0) {
 					UIHelper.ToastMessage(TweetDetail.this,
 							R.string.msg_load_is_null);

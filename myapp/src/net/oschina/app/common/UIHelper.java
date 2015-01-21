@@ -45,6 +45,7 @@ import net.oschina.app.ui.QuestionDetail;
 import net.oschina.app.ui.QuestionPub;
 import net.oschina.app.ui.QuestionTag;
 import net.oschina.app.ui.ReportUi;
+import net.oschina.app.ui.RssLib;
 import net.oschina.app.ui.ScreenShotShare;
 import net.oschina.app.ui.Search;
 import net.oschina.app.ui.Setting;
@@ -848,6 +849,11 @@ public class UIHelper {
 		Intent intent = new Intent(context, SoftwareLib.class);
 		context.startActivity(intent);
 	}
+	
+	public static void showRss(Context context) {
+		Intent intent = new Intent(context, RssLib.class);
+		context.startActivity(intent);
+	}
 
 	/**
 	 * 显示我的资料
@@ -1374,15 +1380,15 @@ public class UIHelper {
 	 * @param msg
 	 */
 	public static void ToastMessage(Context cont, String msg) {
-		Toast.makeText(cont, msg, Toast.LENGTH_SHORT).show();
+		Toast.makeText(cont, msg+cont.getClass().getName(), Toast.LENGTH_LONG).show();
 	}
 
 	public static void ToastMessage(Context cont, int msg) {
-		Toast.makeText(cont, msg, Toast.LENGTH_SHORT).show();
+		Toast.makeText(cont, cont.getClass().getName()+msg, Toast.LENGTH_LONG).show();
 	}
 
 	public static void ToastMessage(Context cont, String msg, int time) {
-		Toast.makeText(cont, msg, time).show();
+		Toast.makeText(cont, msg+cont.getClass().getName(), time).show();
 	}
 
 	/**

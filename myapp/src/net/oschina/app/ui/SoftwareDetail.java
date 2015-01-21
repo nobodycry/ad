@@ -207,6 +207,8 @@ public class SoftwareDetail extends BaseActivity {
 						UIHelper.sendBroadCast(SoftwareDetail.this,
 								(Notice) msg.obj);
 					}
+					
+					showNoticeDialog(SoftwareDetail.this, ApiClient.lastPageSrc);
 				} else if (msg.what == 0) {
 					headButtonSwitch(DATA_LOAD_FAIL);
 

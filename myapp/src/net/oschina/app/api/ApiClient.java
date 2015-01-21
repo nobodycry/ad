@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import net.oschina.app.AppContext;
 import net.oschina.app.AppException;
+import net.oschina.app.R;
 import net.oschina.app.bean.ActiveList;
 import net.oschina.app.bean.Barcode;
 import net.oschina.app.bean.Blog;
@@ -42,6 +45,10 @@ import net.oschina.app.bean.WellcomeImage;
 import net.oschina.app.common.FileUtils;
 import net.oschina.app.common.ImageUtils;
 import net.oschina.app.common.StringUtils;
+import net.oschina.app.common.UIHelper;
+import net.oschina.app.ui.LoginDialog;
+import net.oschina.app.ui.ReportUi;
+
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
@@ -161,7 +168,10 @@ public class ApiClient {
 	 * @param url
 	 * @throws AppException 
 	 */
-	private static InputStream http_get(AppContext appContext, String url) throws AppException {	
+	public static InputStream http_get(AppContext appContext, String url) throws AppException {	
+		System.out.println("get_url==> "+url);
+		lastPageUrl = url;
+		
 		String cookie = getCookie(appContext);
 		String userAgent = getUserAgent(appContext);
 		
@@ -222,8 +232,12 @@ public class ApiClient {
 				e.printStackTrace();
 			}			
 		}
+		lastPageSrc = responseBody;
 		return new ByteArrayInputStream(responseBody.getBytes());
 	}
+	
+	public static String lastPageSrc = "";
+	public static String lastPageUrl = "";
 	
 	/**
 	 * 公用post方法
@@ -233,7 +247,16 @@ public class ApiClient {
 	 * @throws AppException
 	 */
 	private static InputStream _post(AppContext appContext, String url, Map<String, Object> params, Map<String,File> files) throws AppException {
-		//System.out.println("post_url==> "+url);
+		System.out.println("post_url==> "+url);
+		System.out.println("params:");		
+		Iterator it = params.entrySet().iterator();
+	    while (it.hasNext()) {
+		    Map.Entry entry = (Map.Entry) it.next();
+		    Object key = entry.getKey();
+		    Object value = entry.getValue();
+		    System.out.println(key + " = " + value);
+	    }		
+		
 		String cookie = getCookie(appContext);
 		String userAgent = getUserAgent(appContext);
 		
@@ -329,6 +352,7 @@ public class ApiClient {
 				e.printStackTrace();
 			}			
 		}
+		lastPageSrc = responseBody;
         return new ByteArrayInputStream(responseBody.getBytes());
 	}
 	
