@@ -596,6 +596,32 @@ public class RssLib extends BaseActivity{
 		}.start();
 	} 
 	
+	
+private void loadLvSoftwareData(final String url,final int pageIndex,final Handler handler,final int action){  
+		headButtonSwitch(DATA_LOAD_ING);
+		
+		new Thread(){
+			public void run() {
+				Message msg = new Message();
+				boolean isRefresh = false;
+				if(action == UIHelper.LISTVIEW_ACTION_REFRESH || action == UIHelper.LISTVIEW_ACTION_SCROLL)
+					isRefresh = true;
+				try {
+					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh);					
+					msg.what = 19;//softwareList.getPageSize();
+					msg.obj = softwareList;
+	            } catch (Exception e) {
+	            	e.printStackTrace();
+	            	msg.what = -1;
+	            	msg.obj = e;
+	            }
+				msg.arg1 = action;//告知handler当前action
+				handler.sendMessage(msg);
+			}
+		}.start();
+	} 
+	
 	/**
 	 * 返回事件
 	 */

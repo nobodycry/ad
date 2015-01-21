@@ -28,6 +28,7 @@ public class SoftwareCatalogList extends Entity{
 	public static class SoftwareType implements Serializable {
 		public String name;
 		public int tag;
+		public String url;
 	}
 
 	public int getSoftwarecount() {
