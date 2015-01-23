@@ -563,8 +563,7 @@ public class RssLib extends BaseActivity{
 				if(action == UIHelper.LISTVIEW_ACTION_REFRESH || action == UIHelper.LISTVIEW_ACTION_SCROLL)
 					isRefresh = true;
 				try {
-					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
-					UIHelper.ToastMessage(RssLib.this, url+encode);
+					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);					
 					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh,encode);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
