@@ -188,7 +188,7 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					UIHelper.ToastMessage(RssLib.this,msg.toString());
+					UIHelper.ToastMessage(RssLib.this, msg.toString()+ApiClient.lastPageSrc);
 				}
 			}
 		};
@@ -250,7 +250,7 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					((AppException)msg.obj).makeToast(RssLib.this);
+					UIHelper.ToastMessage(RssLib.this, msg.toString()+ApiClient.lastPageSrc);
 				}
 			}
 		};
@@ -389,7 +389,7 @@ public class RssLib extends BaseActivity{
 					//有异常--显示加载出错 & 弹出错误消息
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_MORE;
 					lvSoftware_foot_more.setText(R.string.load_error);
-					UIHelper.ToastMessage(RssLib.this, msg.toString());
+					UIHelper.ToastMessage(RssLib.this, msg.toString()+ApiClient.lastPageSrc);
 				}
 				if(lvSoftwareData.size()==0){
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_EMPTY;
