@@ -31,15 +31,7 @@ import android.util.Xml;
 public class RssList extends Entity {
 	
 	public List<Map> rssList = null;
-	
-	
-	public static SoftwareList getList(AppContext appContext, int tag, boolean isRefresh) {
-		if(tag<0 || tag>7){
-			tag = 0;
-		}
-		return getList(appContext, "http://www3.nhk.or.jp/rss/news/cat"+tag+".xml", isRefresh,null);		
-	}
-	
+
 	public static SoftwareList getList(AppContext appContext, String url, boolean isRefresh,String encode) {
 		SoftwareList result = new SoftwareList();
 		RssList nh = null;

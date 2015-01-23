@@ -188,7 +188,7 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					UIHelper.ToastMessage(RssLib.this,"error");
+					UIHelper.ToastMessage(RssLib.this,msg.toString());
 				}
 			}
 		};
@@ -389,7 +389,7 @@ public class RssLib extends BaseActivity{
 					//有异常--显示加载出错 & 弹出错误消息
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_MORE;
 					lvSoftware_foot_more.setText(R.string.load_error);
-					((AppException)msg.obj).makeToast(RssLib.this);
+					UIHelper.ToastMessage(RssLib.this, msg.toString());
 				}
 				if(lvSoftwareData.size()==0){
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_EMPTY;
@@ -483,7 +483,7 @@ public class RssLib extends BaseActivity{
 		new Thread(){
 			public void run() {
 				Message msg = new Message();
-				boolean isRefresh = true;//default true
+				boolean isRefresh = false;//default true
 				if(action == UIHelper.LISTVIEW_ACTION_REFRESH || action == UIHelper.LISTVIEW_ACTION_SCROLL)
 					isRefresh = true;
 				try {
@@ -583,7 +583,7 @@ public class RssLib extends BaseActivity{
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),tag,isRefresh);					
+					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),"http://www3.nhk.or.jp/rss/news/cat"+tag+".xml",isRefresh,null);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
 	            } catch (Exception e) {
@@ -610,13 +610,15 @@ private void loadLvSoftwareData(final String url,final int pageIndex,final Handl
 					isRefresh = true;
 				try {
 					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
+					UIHelper.ToastMessage(RssLib.this, url+encode);
 					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),url,isRefresh,encode);					
 					msg.what = 19;//softwareList.getPageSize();
 					msg.obj = softwareList;
-	            } catch (Exception e) {
-	            	e.printStackTrace();
+	            } catch (Exception e) {	            	
 	            	msg.what = -1;
 	            	msg.obj = e;
+	            	UIHelper.ToastMessage(RssLib.this, ApiClient.lastPageSrc);
+	            	UIHelper.ToastMessage(RssLib.this, e.toString());
 	            }
 				msg.arg1 = action;//告知handler当前action
 				handler.sendMessage(msg);

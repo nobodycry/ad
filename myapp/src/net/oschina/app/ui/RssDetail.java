@@ -245,7 +245,7 @@ public class RssDetail extends BaseActivity {
 					softwareDetail.id = 12345;
 					softwareDetail.setBody(content);
 					softwareDetail.setTitle(ident);
-					softwareDetail.setFavorite(1);
+					softwareDetail.setFavorite(0);
 					softwareDetail.setHomepage(url);
 					softwareDetail.setDocument(url);
 					softwareDetail.setDownload(url);
