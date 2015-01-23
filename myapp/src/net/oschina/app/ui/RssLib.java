@@ -188,7 +188,8 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					UIHelper.ToastMessage(RssLib.this, "mSoftwareCatalogHandler"+msg.toString()+ApiClient.lastPageSrc);
+					Exception e = (Exception)msg.obj;
+					UIHelper.ToastMessage(RssLib.this, "mSoftwareCatalogHandler"+e.toString()+ApiClient.lastPageSrc);
 				}
 			}
 		};
@@ -250,7 +251,8 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					UIHelper.ToastMessage(RssLib.this, "mSoftwareTagHandler"+msg.toString()+ApiClient.lastPageSrc);
+					Exception e = (Exception)msg.obj;
+					UIHelper.ToastMessage(RssLib.this, "mSoftwareTagHandler"+e.toString()+ApiClient.lastPageSrc);
 				}
 			}
 		};
@@ -389,7 +391,8 @@ public class RssLib extends BaseActivity{
 					//有异常--显示加载出错 & 弹出错误消息
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_MORE;
 					lvSoftware_foot_more.setText(R.string.load_error);
-					UIHelper.ToastMessage(RssLib.this, "mSoftwareHandler"+msg.toString()+ApiClient.lastPageSrc);
+					Exception e = (Exception)msg.obj;
+					UIHelper.ToastMessage(RssLib.this, "mSoftwareHandler"+e.toString()+ApiClient.lastPageSrc);
 				}
 				if(lvSoftwareData.size()==0){
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_EMPTY;
@@ -567,9 +570,7 @@ public class RssLib extends BaseActivity{
 					msg.obj = softwareList;
 	            } catch (Exception e) {	            	
 	            	msg.what = -1;
-	            	msg.obj = e;
-	            	UIHelper.ToastMessage(RssLib.this, ApiClient.lastPageSrc);
-	            	UIHelper.ToastMessage(RssLib.this, e.toString());
+	            	msg.obj = e;	            	
 	            }
 				msg.arg1 = action;//告知handler当前action
 				handler.sendMessage(msg);
