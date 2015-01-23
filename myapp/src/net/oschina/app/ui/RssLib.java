@@ -188,7 +188,7 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					UIHelper.ToastMessage(RssLib.this, msg.toString()+ApiClient.lastPageSrc);
+					UIHelper.ToastMessage(RssLib.this, "mSoftwareCatalogHandler"+msg.toString()+ApiClient.lastPageSrc);
 				}
 			}
 		};
@@ -250,7 +250,7 @@ public class RssLib extends BaseActivity{
 				}
 				else if(msg.what == -1){
 					//有异常--显示加载出错 & 弹出错误消息
-					UIHelper.ToastMessage(RssLib.this, msg.toString()+ApiClient.lastPageSrc);
+					UIHelper.ToastMessage(RssLib.this, "mSoftwareTagHandler"+msg.toString()+ApiClient.lastPageSrc);
 				}
 			}
 		};
@@ -316,7 +316,7 @@ public class RssLib extends BaseActivity{
 					if(curHeadTag == HEAD_TAG_CATALOG)
 						loadLvSoftwareTagData(curSearchTag, pageIndex, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_SCROLL,null);
 					else
-						loadLvSoftwareData(curHeadTag, pageIndex, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_SCROLL);
+						loadLvSoftwareData("http://www3.nhk.or.jp/rss/news/cat"+curHeadTag+".xml", pageIndex, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_SCROLL,null);
 				}
 			}
 			public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
@@ -328,7 +328,7 @@ public class RssLib extends BaseActivity{
 				if(curHeadTag == HEAD_TAG_CATALOG)
 					loadLvSoftwareTagData(curSearchTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_REFRESH,null);
 				else
-					loadLvSoftwareData(curHeadTag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_REFRESH);
+					loadLvSoftwareData("http://www3.nhk.or.jp/rss/news/cat"+curHeadTag+".xml", 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_REFRESH,null);
             }
         });
     	
@@ -389,7 +389,7 @@ public class RssLib extends BaseActivity{
 					//有异常--显示加载出错 & 弹出错误消息
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_MORE;
 					lvSoftware_foot_more.setText(R.string.load_error);
-					UIHelper.ToastMessage(RssLib.this, msg.toString()+ApiClient.lastPageSrc);
+					UIHelper.ToastMessage(RssLib.this, "mSoftwareHandler"+msg.toString()+ApiClient.lastPageSrc);
 				}
 				if(lvSoftwareData.size()==0){
 					curLvSoftwareDataState = UIHelper.LISTVIEW_DATA_EMPTY;
@@ -463,7 +463,7 @@ public class RssLib extends BaseActivity{
 		    	else
 		    	{		    		
 		    		curScreen = SCREEN_SOFTWARE;
-		    		loadLvSoftwareData(tag, 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG);	
+		    		loadLvSoftwareData("http://www3.nhk.or.jp/rss/news/cat"+tag+".xml", 0, mSoftwareHandler, UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG,null);	
 		    	}			
 	    	
 		    	mTitle.setText(title);
@@ -550,56 +550,7 @@ public class RssLib extends BaseActivity{
      * @param handler 处理器
      * @param action 动作标识
      */
-	private void loadLvSoftwareData(final int tag,final int pageIndex,final Handler handler,final int action){  
-		
-		String _searchTag = "";
-		
-		switch (tag) {
-		case HEAD_TAG_RECOMMEND: 
-			_searchTag = SoftwareList.TAG_RECOMMEND;
-			break;
-		case HEAD_TAG_LASTEST: 
-			_searchTag = SoftwareList.TAG_LASTEST;
-			break;
-		case HEAD_TAG_HOT: 
-			_searchTag = SoftwareList.TAG_HOT;
-			break;
-		case HEAD_TAG_CHINA: 
-			_searchTag = SoftwareList.TAG_CHINA;
-			break;
-		}
-		
-		if(StringUtils.isEmpty(_searchTag)) return;		
-		
-		final String searchTag = _searchTag;
-		
-		headButtonSwitch(DATA_LOAD_ING);
-		
-		new Thread(){
-			public void run() {
-				Message msg = new Message();
-				boolean isRefresh = false;
-				if(action == UIHelper.LISTVIEW_ACTION_REFRESH || action == UIHelper.LISTVIEW_ACTION_SCROLL)
-					isRefresh = true;
-				try {
-					//SoftwareList softwareList = ((AppContext)getApplication()).getSoftwareList(searchTag, pageIndex, isRefresh);
-					SoftwareList softwareList = RssList.getList((AppContext)getApplication(),"http://www3.nhk.or.jp/rss/news/cat"+tag+".xml",isRefresh,null);					
-					msg.what = 19;//softwareList.getPageSize();
-					msg.obj = softwareList;
-	            } catch (Exception e) {
-	            	e.printStackTrace();
-	            	msg.what = -1;
-	            	msg.obj = e;
-	            }
-				msg.arg1 = action;//告知handler当前action
-				if(curHeadTag == tag)
-					handler.sendMessage(msg);
-			}
-		}.start();
-	} 
-	
-	
-private void loadLvSoftwareData(final String url,final int pageIndex,final Handler handler,final int action,final String encode){  
+	private void loadLvSoftwareData(final String url,final int pageIndex,final Handler handler,final int action,final String encode){  
 		headButtonSwitch(DATA_LOAD_ING);
 		
 		new Thread(){
